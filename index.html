@@ -1,9 +1,1617 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=support.html">
-<title>NestBaby</title>
-</head>
-<body><p><a href="support.html">NestBaby support</a> · <a href="privacy.html">privacy policy</a></p></body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>NestBaby</title>
+    <meta
+      name="description"
+      content="NestBaby is the family baby log: feeds, sleep, diapers, growth on WHO curves and vaccines, logged in two taps and shared with everyone who looks after your baby. Free, works offline, in English and Vietnamese."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="NestBaby — Parenting is hard. Tracking shouldn't be."
+    />
+    <meta
+      property="og:description"
+      content="The family baby log: feeds, sleep, diapers, growth on WHO curves, vaccines and a night mode. Free on iPhone, coming soon to Android."
+    />
+    <meta
+      property="og:url"
+      content="https://antdp97.github.io/nestbaby-site/"
+    />
+    <meta
+      property="og:image"
+      content="https://antdp97.github.io/nestbaby-site/assets/landing/icon-256.png"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://antdp97.github.io/nestbaby-site/"
+    />
+    <link
+      rel="alternate"
+      hreflang="vi"
+      href="https://antdp97.github.io/nestbaby-site/?lang=vi"
+    />
+    <meta name="theme-color" content="#f7f2eb" />
+    <meta name="apple-itunes-app" content="app-id=6807465910" />
+    <link rel="icon" type="image/png" href="assets/landing/favicon-64.png" />
+    <link rel="apple-touch-icon" href="assets/landing/icon-256.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"
+    />
+    <style>
+      /* The app's own tokens (app/lib/core/design/nb_colors.dart + nb_theme.dart).
+     Two day palettes share one cream ground — blue for a boy, pink for a
+     girl — and the page alternates them section by section, the way the app
+     re-colours itself for each baby. Night is its own amber world. */
+      :root {
+        --ground: #f7f2eb;
+        --night-ground: #070603;
+        --night-ink: #ffab3d;
+        --night-dim: #a8702a;
+        --night-border: #6b4718;
+        --night-faint: #3d2a10;
+        --gutter: clamp(16px, 4vw, 40px);
+        --max: 1120px;
+        --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+        color-scheme: light;
+      }
+      :root,
+      .boy {
+        --ink: #081f5c;
+        --ink-soft: #4a5a86;
+        --primary: #334eac;
+        --on-primary: #f7f2eb;
+        --surface: #e9edf5;
+        --rule: #081f5c;
+        --hair: #c9ceda;
+        --shadow: rgba(8, 31, 92, 0.45);
+      }
+      .girl {
+        --ink: #610027;
+        --ink-soft: #8a4a5c;
+        --primary: #912b48;
+        --on-primary: #fdf0f3;
+        --surface: #fcd0d9;
+        --rule: #610027;
+        --hair: #e6c6cd;
+        --shadow: rgba(97, 0, 39, 0.4);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--ground);
+        color: var(--ink);
+        font: 400 17px/1.6 var(--display);
+        font-stretch: 100%;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      .boy,
+      .girl {
+        color: var(--ink);
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: var(--primary);
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--primary);
+        outline-offset: 3px;
+      }
+      .wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding-inline: var(--gutter);
+      }
+
+      /* Type scale: 12 · 14 · 17 · 21 · clamp h2 · clamp h1 */
+      .kicker {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--primary);
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        text-wrap: balance;
+        font-family: var(--display);
+      }
+      h1 {
+        font-size: clamp(2.3rem, 5.4vw, 4.2rem);
+        font-weight: 850;
+        font-stretch: 112%;
+        line-height: 1.06;
+        letter-spacing: -0.025em;
+      }
+      h2 {
+        font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+        font-weight: 800;
+        font-stretch: 115%;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      h3 {
+        font-size: 21px;
+        font-weight: 750;
+        font-stretch: 108%;
+        line-height: 1.25;
+      }
+      p {
+        margin: 0;
+      }
+      .lede {
+        font-size: 19px;
+        line-height: 1.6;
+        color: var(--ink-soft);
+        max-width: 36em;
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Top bar */
+      .bar {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        z-index: 10;
+        background: color-mix(in srgb, var(--ground) 92%, transparent);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--hair);
+      }
+      .bar .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 64px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--ink);
+      }
+      .brand img {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+      }
+      .brand span {
+        font-weight: 850;
+        font-stretch: 118%;
+        font-size: 20px;
+        letter-spacing: -0.01em;
+      }
+      .bar nav {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .bar nav a {
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .bar nav a:hover {
+        color: var(--primary);
+      }
+      @media (max-width: 760px) {
+        .bar nav .sec {
+          display: none;
+        }
+      }
+      .lang {
+        display: inline-flex;
+        border: 1.5px solid var(--ink);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .lang a {
+        padding: 6px 9px;
+        color: var(--ink);
+      }
+      .lang a[aria-current="true"] {
+        background: var(--ink);
+        color: var(--ground);
+      }
+      .cta-link {
+        background: var(--primary);
+        color: var(--on-primary) !important;
+        padding: 9px 14px;
+        font-weight: 700;
+      }
+
+      /* Hero */
+      .hero {
+        padding-block: clamp(40px, 7vw, 88px) clamp(48px, 7vw, 96px);
+      }
+      .hero .wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: clamp(32px, 6vw, 72px);
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .hero .wrap {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .hero-copy {
+        display: grid;
+        gap: 24px;
+      }
+      .hero h1 .line2 {
+        color: var(--primary);
+        display: block;
+      }
+
+      /* The app's stat strip, drawn in HTML: thick top rule, square corners,
+     the `h` and `×` set small against the numeral — as on Home. */
+      .tiles {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        max-width: 460px;
+      }
+      .tile {
+        background: var(--surface);
+        border-top: 3px solid var(--rule);
+        padding: 10px;
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+      }
+      .tile.on {
+        border-top-color: var(--primary);
+      }
+      .tile .lab {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .tile.on .lab {
+        color: var(--primary);
+      }
+      .tile .val {
+        font-size: clamp(22px, 6vw, 34px);
+        font-weight: 850;
+        font-stretch: 112%;
+        line-height: 1;
+        white-space: nowrap;
+      }
+      .tile.on .val {
+        color: var(--primary);
+      }
+      .tile .val small {
+        font-size: 0.42em;
+        font-weight: 700;
+        margin-left: 1px;
+      }
+      .tile .sub {
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+
+      .stores {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+      .store {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--ink);
+        color: var(--ground);
+        text-decoration: none;
+        padding: 11px 18px 11px 14px;
+        min-height: 52px;
+      }
+      .store:hover {
+        background: var(--primary);
+      }
+      .store svg {
+        width: 22px;
+        height: 22px;
+        flex: none;
+      }
+      .store span {
+        display: grid;
+        line-height: 1.15;
+      }
+      .store small {
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        opacity: 0.8;
+      }
+      .store b {
+        font-size: 17px;
+        font-weight: 700;
+        font-stretch: 105%;
+      }
+      .store.soon {
+        background: transparent;
+        color: var(--ink);
+        border: 2px dashed var(--ink-soft);
+        cursor: default;
+      }
+      .store.soon small {
+        opacity: 1;
+        color: var(--ink-soft);
+      }
+      .facts {
+        font-size: 14px;
+        color: var(--ink-soft);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+      }
+      .facts span::before {
+        content: "";
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        background: var(--primary);
+        margin-right: 8px;
+        vertical-align: 1px;
+      }
+
+      /* Phone: the app's own screen, no device chrome. Its bezel takes the
+     palette of the section it sits in — a pink phone lives in a .girl scope. */
+      .phone {
+        border: 9px solid var(--ink);
+        border-radius: 44px;
+        overflow: hidden;
+        background: var(--ink);
+        aspect-ratio: 1320 / 2868;
+        max-width: 100%;
+        box-shadow: 0 30px 60px -30px var(--shadow);
+      }
+      .phone img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .name {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .name::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: var(--primary);
+      }
+
+      /* Hero pair: Daniel in front, Emma behind and to the right. */
+      .pair-shot {
+        position: relative;
+        justify-self: center;
+        width: min(440px, 92vw);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .pair-shot figure {
+        margin: 0;
+        display: grid;
+        gap: 12px;
+        justify-items: center;
+      }
+      .pair-shot .front {
+        grid-column: 1 / 2;
+        grid-row: 1;
+        width: 118%;
+        z-index: 2;
+      }
+      .pair-shot .behind {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        width: 100%;
+        justify-self: end;
+        margin-top: 64px;
+        z-index: 1;
+      }
+      .pair-shot .phone {
+        width: 100%;
+      }
+      .pair-shot .behind .phone {
+        border-width: 8px;
+        border-radius: 38px;
+      }
+      .hero-tag {
+        position: absolute;
+        left: -24px;
+        top: 58%;
+        z-index: 3;
+        background: var(--primary);
+        color: var(--on-primary);
+        padding: 10px 14px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        box-shadow: 0 12px 24px -12px var(--shadow);
+      }
+      @media (max-width: 860px) {
+        .hero-tag {
+          left: 0;
+        }
+      }
+
+      /* A day, drawn as the Log draws it. */
+      .day {
+        padding-block: clamp(56px, 8vw, 104px);
+        border-top: 3px solid var(--rule);
+      }
+      .day .wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+        gap: clamp(32px, 6vw, 80px);
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .day .wrap {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .day .side {
+          order: -1;
+        }
+      }
+      .day header {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 36px;
+      }
+      .log {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 2px solid var(--rule);
+      }
+      .log li {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr);
+        gap: 4px 18px;
+        padding-block: 18px;
+        border-bottom: 1px solid var(--hair);
+      }
+      .log time {
+        font-weight: 800;
+        font-size: 17px;
+        font-variant-numeric: tabular-nums;
+        padding-top: 1px;
+      }
+      .log .what {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .log .what em {
+        font-style: normal;
+        color: var(--ink-soft);
+        font-weight: 400;
+      }
+      .log .why {
+        grid-column: 2;
+        color: var(--ink-soft);
+        font-size: 16px;
+        max-width: 34em;
+      }
+      .day .side {
+        position: sticky;
+        top: 96px;
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+      }
+      .day .side .phone {
+        width: min(300px, 78vw);
+      }
+      .caption {
+        font-size: 13px;
+        color: var(--ink-soft);
+        text-align: center;
+      }
+
+      /* Night: the app's night mode, verbatim palette. */
+      .night {
+        background: var(--night-ground);
+        color: var(--night-ink);
+        padding-block: clamp(64px, 9vw, 120px);
+      }
+      .night .wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(32px, 6vw, 72px);
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .night .wrap {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .night .kicker {
+        color: var(--night-dim);
+      }
+      .night .clock {
+        font-size: clamp(5rem, 15vw, 10rem);
+        font-weight: 850;
+        font-stretch: 112%;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+      .night h2 {
+        color: var(--night-ink);
+      }
+      .night p {
+        color: var(--night-dim);
+        font-size: 18px;
+        max-width: 32em;
+      }
+      .night-copy {
+        display: grid;
+        gap: 22px;
+      }
+      .night-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--night-border);
+      }
+      .night-list li {
+        padding-block: 14px;
+        border-bottom: 1px solid var(--night-faint);
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+        gap: 16px;
+      }
+      .night-list b {
+        font-weight: 700;
+        color: var(--night-ink);
+      }
+      .night-list span {
+        color: var(--night-dim);
+      }
+      @media (max-width: 480px) {
+        .night-list li {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 2px;
+        }
+      }
+      .night-shots {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        justify-items: center;
+      }
+      .night-shots .phone {
+        border-color: var(--night-border);
+        background: var(--night-ground);
+        box-shadow: 0 0 80px -20px rgba(255, 171, 61, 0.25);
+      }
+      .night-shots figure {
+        margin: 0;
+        width: 100%;
+        max-width: 250px;
+        display: grid;
+        gap: 10px;
+      }
+      .night-shots figcaption {
+        font-size: 13px;
+        color: var(--night-dim);
+        text-align: center;
+      }
+
+      /* Growth (boy) + vaccines (girl) */
+      .health {
+        padding-block: clamp(56px, 8vw, 104px);
+      }
+      .health > .wrap > header {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 44px;
+        max-width: 44em;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(24px, 4vw, 48px);
+      }
+      @media (max-width: 760px) {
+        .pair {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .feature {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 170px);
+        gap: 22px;
+        align-items: start;
+        border-top: 3px solid var(--rule);
+        padding-top: 22px;
+      }
+      @media (max-width: 480px) {
+        .feature {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .feature .text {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+      .feature h3 {
+        color: var(--ink);
+      }
+      .feature p {
+        color: var(--ink-soft);
+        font-size: 16px;
+      }
+      .feature .shot {
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+      }
+      .feature .phone {
+        border-width: 6px;
+        border-radius: 28px;
+        width: 170px;
+      }
+      .fact {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary) !important;
+      }
+
+      .more {
+        margin-top: clamp(48px, 7vw, 80px);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        border-top: 2px solid var(--rule);
+      }
+      @media (max-width: 860px) {
+        .more {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 520px) {
+        .more {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .more div {
+        padding: 20px 20px 22px 0;
+        border-bottom: 1px solid var(--hair);
+        display: grid;
+        gap: 6px;
+        align-content: start;
+      }
+      .more h3 {
+        font-size: 17px;
+      }
+      .more p {
+        font-size: 15px;
+        color: var(--ink-soft);
+      }
+
+      /* Family — a full pink block. */
+      .family {
+        background: var(--primary);
+        color: var(--on-primary);
+        padding-block: clamp(56px, 8vw, 104px);
+      }
+      .family .wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(32px, 6vw, 72px);
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .family .wrap {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      .family .kicker {
+        color: var(--surface);
+      }
+      .family h2 {
+        color: var(--on-primary);
+      }
+      .family .copy {
+        display: grid;
+        gap: 20px;
+      }
+      .family p {
+        color: var(--on-primary);
+        opacity: 0.88;
+        font-size: 18px;
+        max-width: 32em;
+      }
+      .code {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        font-size: clamp(20px, 5.4vw, 38px);
+        font-weight: 850;
+        font-stretch: 110%;
+        letter-spacing: 0.06em;
+        font-variant-numeric: tabular-nums;
+      }
+      .code span {
+        background: var(--on-primary);
+        color: var(--ink);
+        padding: 3px 7px;
+        min-width: 1.15em;
+        text-align: center;
+      }
+      .code .gap {
+        background: transparent;
+        color: var(--surface);
+        padding-inline: 2px;
+        min-width: 0;
+      }
+      .promises {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 2px solid var(--on-primary);
+      }
+      .promises li {
+        padding-block: 16px;
+        border-bottom: 1px solid
+          color-mix(in srgb, var(--on-primary) 30%, transparent);
+        display: grid;
+        gap: 4px;
+      }
+      .promises b {
+        font-size: 18px;
+        font-weight: 700;
+      }
+      .promises span {
+        opacity: 0.88;
+        font-size: 15px;
+      }
+
+      /* Closing — back to blue. */
+      .close {
+        padding-block: clamp(64px, 9vw, 112px);
+      }
+      .close .wrap {
+        display: grid;
+        gap: 26px;
+        justify-items: start;
+      }
+      .close img.icon {
+        width: 88px;
+        height: 88px;
+        border-radius: 20px;
+      }
+
+      footer {
+        border-top: 3px solid var(--rule);
+        padding-block: 28px 40px;
+        font-size: 14px;
+        color: var(--ink-soft);
+      }
+      footer .wrap {
+        display: grid;
+        gap: 14px;
+      }
+      footer .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 22px;
+      }
+      footer .links a {
+        color: var(--ink);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      footer .links a:hover {
+        text-decoration: underline;
+      }
+      .mail {
+        font-weight: 700;
+        color: var(--ink);
+        user-select: all;
+      }
+      .disclaimer {
+        max-width: 52em;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar boy">
+      <div class="wrap">
+        <a class="brand" href="#top" aria-label="NestBaby">
+          <img
+            src="assets/landing/icon-256.png"
+            alt=""
+            width="34"
+            height="34"
+          />
+          <span>NestBaby</span>
+        </a>
+        <nav aria-label="Sections">
+          <a class="sec" href="#day" data-i18n="nav.day">A day</a>
+          <a class="sec" href="#night" data-i18n="nav.night">Night</a>
+          <a class="sec" href="#health" data-i18n="nav.health">Growth</a>
+          <a class="sec" href="#family" data-i18n="nav.family">Family</a>
+          <span class="lang" role="group" aria-label="Language">
+            <a href="?lang=en" data-lang="en" hreflang="en">EN</a>
+            <a href="?lang=vi" data-lang="vi" hreflang="vi">VI</a>
+          </span>
+          <a class="cta-link" href="#get" data-i18n="nav.get">Get the app</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero boy">
+        <div class="wrap">
+          <div class="hero-copy">
+            <p class="kicker" data-i18n="hero.kicker">The family baby log</p>
+            <h1>
+              <span data-i18n="hero.h1a">Parenting is hard.</span
+              ><span class="line2" data-i18n="hero.h1b"
+                >Tracking shouldn't be.</span
+              >
+            </h1>
+            <p class="lede" data-i18n="hero.lede">
+              NestBaby logs feeds, sleep, diapers, growth and vaccines in two
+              taps — and keeps everyone who looks after your baby on the same
+              page, each on their own phone.
+            </p>
+
+            <div
+              class="tiles"
+              data-i18n-aria="hero.tilesAria"
+              aria-label="An example of Home: fed 4 times, slept 10 hours 34 minutes, changed 4 times today"
+            >
+              <div class="tile">
+                <span class="lab" data-i18n="tile.fed">Fed</span
+                ><span class="val num">4<small>×</small></span
+                ><span class="sub" data-i18n="tile.fedSub">last 21m ago</span>
+              </div>
+              <div class="tile on">
+                <span class="lab" data-i18n="tile.slept">Slept</span
+                ><span class="val num">10<small>h</small>34</span
+                ><span class="sub" data-i18n="tile.sleptSub">napping now</span>
+              </div>
+              <div class="tile">
+                <span class="lab" data-i18n="tile.changed">Changed</span
+                ><span class="val num">4<small>×</small></span
+                ><span class="sub" data-i18n="tile.changedSub">1 dirty</span>
+              </div>
+            </div>
+
+            <div class="stores" data-stores></div>
+            <p class="facts">
+              <span data-i18n="facts.free">Free</span
+              ><span data-i18n="facts.platforms">iPhone · Android soon</span
+              ><span>English · Tiếng Việt</span
+              ><span data-i18n="facts.offline">Works offline</span>
+            </p>
+          </div>
+
+          <div class="pair-shot">
+            <figure class="front boy">
+              <div class="phone">
+                <img
+                  src="assets/landing/boy-home.jpg"
+                  data-i18n-alt="alt.boyHome"
+                  alt="NestBaby Home for Daniel, in blue: fed, slept and changed today, a running nap and today's log"
+                  width="660"
+                  height="1434"
+                  fetchpriority="high"
+                />
+              </div>
+              <figcaption class="name" data-i18n="name.daniel">
+                Daniel · boy
+              </figcaption>
+            </figure>
+            <figure class="behind girl">
+              <div class="phone">
+                <img
+                  src="assets/landing/girl-home.jpg"
+                  data-i18n-alt="alt.girlHome"
+                  alt="NestBaby Home for Emma, in pink: the same day, drawn in the girl palette"
+                  width="660"
+                  height="1434"
+                />
+              </div>
+              <figcaption class="name" data-i18n="name.emma">
+                Emma · girl
+              </figcaption>
+            </figure>
+            <div class="hero-tag" data-i18n="hero.tag">
+              Nap running · expected wake 16:06
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="day girl" id="day" aria-labelledby="day-title">
+        <div class="wrap">
+          <div>
+            <header>
+              <p class="kicker" data-i18n="day.kicker">A day in the Log</p>
+              <h2 id="day-title" data-i18n="day.h2">
+                Tap once and it's saved. The rest is just getting it right.
+              </h2>
+              <p class="lede" data-i18n="day.lede">
+                Every tile on Home logs the moment you tap it. The sheet that
+                opens afterwards is only for details — skip it, and the entry is
+                already there.
+              </p>
+            </header>
+            <ol class="log">
+              <li>
+                <time class="num">06:40</time
+                ><span class="what" data-i18n="log.1a"
+                  >Breastfeed <em>· left 12m, right 9m</em></span
+                ><span class="why" data-i18n="log.1b"
+                  >Time each side and switch with one tap. Close the app, lock
+                  the phone — the timer keeps running.</span
+                >
+              </li>
+              <li>
+                <time class="num">07:15</time
+                ><span class="what" data-i18n="log.2a"
+                  >Diaper <em>· wet</em></span
+                ><span class="why" data-i18n="log.2b"
+                  >Unusual stool colours are flagged for your doctor, with a
+                  colour guide to check against.</span
+                >
+              </li>
+              <li>
+                <time class="num">09:30</time
+                ><span class="what" data-i18n="log.3a"
+                  >Nap <em>· 1h 10m</em></span
+                ><span class="why" data-i18n="log.3b"
+                  >Naps and nights are told apart by your family's bedtime, and
+                  the next nap is predicted from the days before.</span
+                >
+              </li>
+              <li>
+                <time class="num">11:00</time
+                ><span class="what" data-i18n="log.4a"
+                  >Solids <em>· carrot purée · most of it</em></span
+                ><span class="why" data-i18n="log.4b"
+                  >A new food with a common allergen is watched for three days,
+                  right on Home.</span
+                >
+              </li>
+              <li>
+                <time class="num">14:00</time
+                ><span class="what" data-i18n="log.5a"
+                  >Bottle <em>· 120 ml · from the stash</em></span
+                ><span class="why" data-i18n="log.5b"
+                  >Pick a bag from the fridge and it's marked used. Expiry is
+                  worked out for you — thawed milk can't be refrozen.</span
+                >
+              </li>
+              <li>
+                <time class="num">17:30</time
+                ><span class="what" data-i18n="log.6a"
+                  >Growth <em>· 7.48 kg · 34th centile</em></span
+                ><span class="why" data-i18n="log.6b"
+                  >Centiles on the WHO standard, on corrected age if your baby
+                  was born early.</span
+                >
+              </li>
+              <li>
+                <time class="num">21:40</time
+                ><span class="what" data-i18n="log.7a"
+                  >Night sleep <em>· asleep</em></span
+                ><span class="why" data-i18n="log.7b"
+                  >From here, the screen switches to night mode.</span
+                >
+              </li>
+            </ol>
+          </div>
+          <aside class="side">
+            <div class="phone">
+              <img
+                src="assets/landing/girl-feed-sheet.jpg"
+                data-i18n-alt="alt.girlFeed"
+                alt="The Feed sheet for Emma, in pink: a 90 ml bottle already saved, with Breast, Bottle, Solids and Pump to choose from"
+                width="660"
+                height="1434"
+                loading="lazy"
+              />
+            </div>
+            <p class="name" data-i18n="name.emma">Emma · girl</p>
+            <p class="caption" data-i18n="day.caption">
+              Open Feed and a 90 ml bottle is already logged. Change it if you
+              need to.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="night" id="night" aria-labelledby="night-title">
+        <div class="wrap">
+          <div class="night-copy">
+            <p class="kicker" data-i18n="night.kicker">Night mode</p>
+            <p class="clock" aria-hidden="true">03:12</p>
+            <h2 id="night-title" data-i18n="night.h2">
+              Three buttons, amber light, nothing else.
+            </h2>
+            <p data-i18n="night.p">
+              When the baby wakes at night, all you need is Feed, Sleep and
+              Diaper. Amber on black won't dazzle you or wake the person next to
+              you. Log it and go back to sleep.
+            </p>
+            <ul class="night-list">
+              <li>
+                <b data-i18n="night.1a">Tap to wake the screen</b
+                ><span data-i18n="night.1b"
+                  >The resting screen shows only how long the baby has
+                  slept.</span
+                >
+              </li>
+              <li>
+                <b data-i18n="night.2a">Tonight</b
+                ><span data-i18n="night.2b"
+                  >Everything logged since the night began, readable without
+                  turning on a light.</span
+                >
+              </li>
+              <li>
+                <b data-i18n="night.3a">Up for the day</b
+                ><span data-i18n="night.3b"
+                  >In the morning, NestBaby hands back the whole night: how
+                  long, the longest stretch, and how many feeds and
+                  changes.</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="night-shots">
+            <figure>
+              <div class="phone">
+                <img
+                  src="assets/landing/night-rest.jpg"
+                  data-i18n-alt="alt.nightRest"
+                  alt="The resting night screen: an amber clock counting how long the baby has slept, on black"
+                  width="660"
+                  height="1434"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption data-i18n="night.cap1">The resting screen</figcaption>
+            </figure>
+            <figure>
+              <div class="phone">
+                <img
+                  src="assets/landing/night-grid.jpg"
+                  data-i18n-alt="alt.nightGrid"
+                  alt="The night grid with three large buttons: Feed, Sleep and Diaper"
+                  width="660"
+                  height="1434"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption data-i18n="night.cap2">
+                Three buttons for 3 a.m.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="health boy" id="health" aria-labelledby="health-title">
+        <div class="wrap">
+          <header>
+            <p class="kicker" data-i18n="health.kicker">Health</p>
+            <h2 id="health-title" data-i18n="health.h2">
+              The numbers your doctor will ask for, in your pocket.
+            </h2>
+            <p class="lede" data-i18n="health.lede">
+              Weight, length, head circumference, the doses given and the ones
+              coming up — exported to CSV or PDF for the appointment.
+            </p>
+          </header>
+
+          <div class="pair">
+            <article class="feature boy">
+              <div class="text">
+                <h3 data-i18n="growth.h3">Growth on the WHO standard</h3>
+                <p data-i18n="growth.p">
+                  Every measurement gives a centile as you type it. The ruler
+                  shows where your baby sits against the 15th–85th band, and how
+                  far they've come since birth.
+                </p>
+                <p class="fact" data-i18n="growth.fact">
+                  Corrected age for babies born early · WHO motor milestones
+                </p>
+              </div>
+              <div class="shot">
+                <div class="phone">
+                  <img
+                    src="assets/landing/boy-growth.jpg"
+                    data-i18n-alt="alt.boyGrowth"
+                    alt="Growth for Daniel, in blue: weight, length and head circumference with centiles on WHO rulers, and motor milestones"
+                    width="660"
+                    height="1434"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="name" data-i18n="name.daniel">Daniel · boy</p>
+              </div>
+            </article>
+            <article class="feature girl">
+              <div class="text">
+                <h3 data-i18n="vac.h3">
+                  A vaccine schedule you don't have to remember
+                </h3>
+                <p data-i18n="vac.p">
+                  Built on the Vietnamese private-clinic schedule and counted
+                  from your baby's birthday. Reminders a week before, the
+                  evening before and two hours before a booked visit. After a
+                  dose, NestBaby prompts temperature checks for 48 hours.
+                </p>
+                <p class="fact" data-i18n="vac.fact">
+                  Move one visit and the rest re-space themselves
+                </p>
+              </div>
+              <div class="shot">
+                <div class="phone">
+                  <img
+                    src="assets/landing/girl-vaccines.jpg"
+                    data-i18n-alt="alt.girlVaccines"
+                    alt="Vaccines for Emma, in pink: the next visit in 7 days and the visits ahead"
+                    width="660"
+                    height="1434"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="name" data-i18n="name.emma">Emma · girl</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="more">
+            <div>
+              <h3 data-i18n="more.1a">Teeth</h3>
+              <p data-i18n="more.1b">
+                A chart of all 20 milk teeth, the date each one came in, and a
+                teething and brushing log.
+              </p>
+            </div>
+            <div>
+              <h3 data-i18n="more.2a">Vitamins</h3>
+              <p data-i18n="more.2b">
+                Vitamin D, iron, supplements — a daily reminder, one tap when
+                given.
+              </p>
+            </div>
+            <div>
+              <h3 data-i18n="more.3a">Temperature</h3>
+              <p data-i18n="more.3b">
+                Anything over 38.0°C is flagged as a fever and watched for 24
+                hours on Home.
+              </p>
+            </div>
+            <div>
+              <h3 data-i18n="more.4a">Milk stash</h3>
+              <p data-i18n="more.4b">
+                Bags in the fridge, the freezer or at room temperature — oldest
+                first, with a warning before they expire.
+              </p>
+            </div>
+            <div>
+              <h3 data-i18n="more.5a">Your own routines</h3>
+              <p data-i18n="more.5b">
+                Massage, physio, probiotics… name it, schedule it, get reminded.
+              </p>
+            </div>
+            <div>
+              <h3 data-i18n="more.6a">Search &amp; export</h3>
+              <p data-i18n="more.6b">
+                Find any entry. Export a day, a week or the whole record as CSV
+                or PDF.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="family girl" id="family" aria-labelledby="family-title">
+        <div class="wrap">
+          <div class="copy">
+            <p class="kicker" data-i18n="family.kicker">One family, one log</p>
+            <h2 id="family-title" data-i18n="family.h2">
+              Dad logs the 2 a.m. feed. Grandma sees it at 7.
+            </h2>
+            <p data-i18n="family.p">
+              Send an invite code to whoever helps — a partner, the
+              grandparents, a nanny. Everyone sees the same day, and every entry
+              shows who logged it.
+            </p>
+            <div
+              class="code num"
+              data-i18n-aria="family.codeAria"
+              aria-label="An example invite code: K7P2 M9QX"
+            >
+              <span>K</span><span>7</span><span>P</span><span>2</span
+              ><span class="gap">–</span><span>M</span><span>9</span
+              ><span>Q</span><span>X</span>
+            </div>
+          </div>
+          <ul class="promises">
+            <li>
+              <b data-i18n="pr.1a">Works offline</b
+              ><span data-i18n="pr.1b"
+                >Everything is saved on the phone first and syncs when you're
+                back online.</span
+              >
+            </li>
+            <li>
+              <b data-i18n="pr.2a">Parents decide, family helps</b
+              ><span data-i18n="pr.2b"
+                >Family members can log everything; settings and invitations are
+                for parents.</span
+              >
+            </li>
+            <li>
+              <b data-i18n="pr.3a">No ads, no tracking</b
+              ><span data-i18n="pr.3b"
+                >Your data is never sold or shared with anyone outside your
+                family.</span
+              >
+            </li>
+            <li>
+              <b data-i18n="pr.4a">Your data is yours</b
+              ><span data-i18n="pr.4b"
+                >Delete any entry, any photo, or your whole account from inside
+                the app.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="close boy" id="get" aria-labelledby="close-title">
+        <div class="wrap">
+          <img
+            class="icon"
+            src="assets/landing/icon-256.png"
+            data-i18n-alt="alt.icon"
+            alt="The NestBaby icon: a sleeping bassinet"
+            width="88"
+            height="88"
+            loading="lazy"
+          />
+          <h2 id="close-title" data-i18n="close.h2">
+            Tonight, let NestBaby remember for you.
+          </h2>
+          <p class="lede" data-i18n="close.lede">
+            Free on iPhone, coming soon to Android. In English and Vietnamese.
+          </p>
+          <div class="stores" data-stores></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="boy">
+      <div class="wrap">
+        <nav class="links" aria-label="Policies and support">
+          <a href="privacy.html" data-i18n="foot.privacy">Privacy policy</a>
+          <a href="support.html" data-i18n="foot.support">Support</a>
+          <a href="delete-account.html" data-i18n="foot.delete"
+            >Delete your account</a
+          >
+        </nav>
+        <p>
+          <span data-i18n="foot.contact">Contact:</span>
+          <a class="mail" href="mailto:phucan97.work@gmail.com"
+            >phucan97.work@gmail.com</a
+          >
+        </p>
+        <p class="disclaimer" data-i18n="foot.disclaimer">
+          NestBaby is not medical advice. Growth, health and development
+          information in the app is for reference only — talk to your baby's
+          paediatrician.
+        </p>
+        <p>© 2026 NestParents</p>
+      </div>
+    </footer>
+
+    <script>
+      // English is the page as written. `?lang=vi` swaps every [data-i18n] node
+      // to the Vietnamese below; the EN/VI switch also works in place (for hosts
+      // that drop the query string) and keeps the URL in step where it can.
+      const STORES = {
+        appStore: "https://apps.apple.com/app/id6807465910",
+        googlePlay: "", // fill in once the Play listing is live: https://play.google.com/store/apps/details?id=io.github.antdp97.nestbaby
+      };
+
+      const VI = {
+        "nav.day": "Một ngày",
+        "nav.night": "Ban đêm",
+        "nav.health": "Tăng trưởng",
+        "nav.family": "Cả nhà",
+        "nav.get": "Tải app",
+        "hero.kicker": "Sổ theo dõi bé cho cả nhà",
+        "hero.h1a": "Nuôi con đã đủ vất vả.",
+        "hero.h1b": "Ghi chép thì không cần thế.",
+        "hero.lede":
+          "NestBaby ghi lại cữ ăn, giấc ngủ, thay tã, tăng trưởng và tiêm chủng của bé — chỉ trong hai chạm — rồi đồng bộ tới điện thoại của mọi người đang cùng chăm bé.",
+        "hero.tilesAria":
+          "Ví dụ màn hình Trang chủ: hôm nay bé đã ăn 4 lần, đã ngủ 10 giờ 34 phút, đã thay tã 4 lần",
+        "tile.fed": "Đã ăn",
+        "tile.fedSub": "21 phút trước",
+        "tile.slept": "Đã ngủ",
+        "tile.sleptSub": "đang ngủ ngày",
+        "tile.changed": "Đã thay",
+        "tile.changedSub": "1 lần bẩn",
+        "facts.free": "Miễn phí",
+        "facts.platforms": "iPhone · sắp có Android",
+        "facts.offline": "Dùng được khi mất mạng",
+        "hero.tag": "Giấc ngủ đang chạy · dự kiến dậy 16:06",
+        "name.daniel": "Daniel · bé trai",
+        "name.emma": "Emma · bé gái",
+        "alt.boyHome":
+          "Trang chủ NestBaby của bé Daniel, màu xanh: số lần ăn, giờ ngủ, số lần thay tã hôm nay, một giấc ngủ ngày đang chạy và nhật ký trong ngày",
+        "alt.girlHome":
+          "Trang chủ NestBaby của bé Emma, màu hồng: cùng một ngày, vẽ bằng bảng màu bé gái",
+        "day.kicker": "Một ngày trong Nhật ký",
+        "day.h2": "Chạm là đã lưu. Phần còn lại chỉ là sửa cho đúng.",
+        "day.lede":
+          "Mỗi ô trên Trang chủ ghi ngay khi bạn chạm. Tấm thẻ mở ra sau đó chỉ để thêm chi tiết — hoặc bỏ qua, vì dòng nhật ký đã có rồi.",
+        "log.1a": "Bú mẹ <em>· trái 12 phút, phải 9 phút</em>",
+        "log.1b":
+          "Bấm giờ từng bên, đổi bên một chạm. Tắt app, khoá màn hình — đồng hồ vẫn chạy.",
+        "log.2a": "Thay tã <em>· ướt</em>",
+        "log.2b":
+          "Màu phân bất thường được đánh dấu để hỏi bác sĩ, kèm bảng màu tham khảo.",
+        "log.3a": "Ngủ ngày <em>· 1 giờ 10 phút</em>",
+        "log.3b":
+          "Tự phân biệt giấc ngày và giấc đêm theo giờ đi ngủ của nhà bạn, và đoán giấc tiếp theo từ những ngày trước.",
+        "log.4a": "Ăn dặm <em>· cà rốt nghiền · ăn gần hết</em>",
+        "log.4b":
+          "Món mới có chứa chất dễ dị ứng được theo dõi ba ngày ngay trên Trang chủ.",
+        "log.5a": "Bình sữa <em>· 120 ml · sữa trữ</em>",
+        "log.5b":
+          "Chọn túi sữa trữ trong tủ lạnh là túi đó được đánh dấu đã dùng. Hạn dùng tính sẵn — sữa đã rã đông không cho cấp đông lại.",
+        "log.6a": "Cân đo <em>· 7.48 kg · bách phân vị 34</em>",
+        "log.6b":
+          "Bách phân vị theo chuẩn WHO, tính theo tuổi hiệu chỉnh nếu bé sinh non.",
+        "log.7a": "Ngủ đêm <em>· đang ngủ</em>",
+        "log.7b": "Từ đây, màn hình chuyển sang chế độ đêm.",
+        "alt.girlFeed":
+          "Tấm thẻ Cho ăn của bé Emma, màu hồng: đã lưu một bình sữa 90 ml, có nút chọn bú mẹ, bình, ăn dặm, hút sữa",
+        "day.caption":
+          "Mở thẻ Cho ăn là bình 90 ml đã được ghi. Chỉnh lại nếu cần.",
+        "night.kicker": "Chế độ đêm",
+        "night.h2": "Ba nút, màu hổ phách, không một ánh sáng thừa.",
+        "night.p":
+          "Nửa đêm bé dậy, bạn chỉ cần Ăn, Ngủ, Thay tã. Chữ màu hổ phách trên nền đen không làm chói mắt, không đánh thức người bên cạnh. Ghi xong rồi ngủ tiếp.",
+        "night.1a": "Chạm để bật màn hình",
+        "night.1b": "Màn hình nghỉ chỉ hiện bé đã ngủ bao lâu.",
+        "night.2a": "Đêm nay",
+        "night.2b":
+          "Mọi thứ đã ghi từ lúc bắt đầu đêm, xem lại không cần bật đèn.",
+        "night.3a": "Dậy hẳn rồi",
+        "night.3b":
+          "Sáng ra, NestBaby trao lại cả đêm: ngủ bao lâu, giấc dài nhất, ăn và thay tã mấy lần.",
+        "night.cap1": "Màn hình nghỉ",
+        "night.cap2": "Ba nút cho 3 giờ sáng",
+        "alt.nightRest":
+          "Màn hình nghỉ ban đêm: đồng hồ màu hổ phách đếm thời gian bé đã ngủ trên nền đen",
+        "alt.nightGrid": "Lưới ban đêm với ba nút lớn: Cho ăn, Ngủ, Thay tã",
+        "health.kicker": "Sức khoẻ",
+        "health.h2": "Những con số bác sĩ sẽ hỏi, có sẵn trong túi.",
+        "health.lede":
+          "Cân nặng, chiều dài, vòng đầu, các mũi đã tiêm và mũi sắp tới — xuất ra CSV hoặc PDF để mang theo khi đi khám.",
+        "growth.h3": "Lớn lên, đo bằng chuẩn WHO",
+        "growth.p":
+          "Mỗi lần cân đo cho ra bách phân vị ngay khi bạn gõ. Thước đo cho thấy bé đang ở đâu so với dải 15–85 và đã đi được bao xa kể từ lúc sinh.",
+        "growth.fact":
+          "Tuổi hiệu chỉnh cho bé sinh non · mốc vận động theo WHO",
+        "alt.boyGrowth":
+          "Tăng trưởng của bé Daniel, màu xanh: cân nặng, chiều dài, vòng đầu với bách phân vị trên thước WHO và các mốc vận động",
+        "vac.h3": "Lịch tiêm không phải nhớ",
+        "vac.p":
+          "Lịch dựng theo phòng tiêm dịch vụ ở Việt Nam, tính từ ngày sinh của bé. Nhắc trước một tuần, tối hôm trước và hai giờ trước giờ hẹn. Sau mũi tiêm, NestBaby nhắc đo nhiệt độ trong 48 giờ.",
+        "vac.fact": "Dời một mũi, các mũi sau tự tính lại",
+        "alt.girlVaccines":
+          "Vắc-xin của bé Emma, màu hồng: lần tiêm tới còn 7 ngày và các lần tiêm sắp tới",
+        "more.1a": "Răng",
+        "more.1b":
+          "Sơ đồ 20 răng sữa, ghi ngày mọc từng chiếc, nhật ký mọc răng và đánh răng.",
+        "more.2a": "Vitamin",
+        "more.2b":
+          "Vitamin D, sắt, thuốc bổ — nhắc hằng ngày, chạm một lần là đã cho uống.",
+        "more.3a": "Nhiệt độ",
+        "more.3b":
+          "Trên 38.0°C được đánh dấu sốt, theo dõi 24 giờ ngay trên Trang chủ.",
+        "more.4a": "Sữa trữ",
+        "more.4b":
+          "Túi sữa trong tủ lạnh, tủ đông, ngoài phòng — dùng túi cũ trước, báo khi sắp hết hạn.",
+        "more.5a": "Hoạt động riêng",
+        "more.5b":
+          "Massage, tập vật lý trị liệu, uống men… tự đặt tên, tự đặt lịch nhắc.",
+        "more.6a": "Tìm kiếm &amp; xuất file",
+        "more.6b":
+          "Tìm lại bất kỳ dòng nào. Xuất một ngày, một tuần, hay cả hồ sơ ra CSV hoặc PDF.",
+        "family.kicker": "Cả nhà, một cuốn sổ",
+        "family.h2": "Bố ghi cữ 2 giờ sáng. Bà nội thấy lúc 7 giờ.",
+        "family.p":
+          "Gửi một mã mời cho người cùng chăm bé — vợ chồng, ông bà, người giúp việc. Ai cũng thấy cùng một ngày của bé, mỗi dòng ghi rõ ai đã ghi.",
+        "family.codeAria": "Ví dụ mã mời: K7P2 M9QX",
+        "pr.1a": "Dùng được khi mất mạng",
+        "pr.1b":
+          "Mọi thứ lưu trên điện thoại trước, đồng bộ khi có mạng trở lại.",
+        "pr.2a": "Bố mẹ quyết, người nhà cùng ghi",
+        "pr.2b":
+          "Người nhà ghi được mọi thứ; cài đặt và mời người khác là việc của bố mẹ.",
+        "pr.3a": "Không quảng cáo, không theo dõi",
+        "pr.3b": "Không bán hay chia sẻ dữ liệu với ai ngoài gia đình bạn.",
+        "pr.4a": "Dữ liệu là của bạn",
+        "pr.4b": "Xoá từng dòng, từng ảnh, hoặc cả tài khoản ngay trong app.",
+        "alt.icon": "Biểu tượng NestBaby: chiếc nôi đang ngủ",
+        "close.h2": "Đêm nay, để NestBaby nhớ giúp bạn.",
+        "close.lede":
+          "Miễn phí trên iPhone, sắp có trên Android. Hỗ trợ tiếng Anh và tiếng Việt.",
+        "foot.privacy": "Chính sách quyền riêng tư",
+        "foot.support": "Hỗ trợ",
+        "foot.delete": "Xoá tài khoản",
+        "foot.contact": "Liên hệ:",
+        "foot.disclaimer":
+          "NestBaby không phải là lời khuyên y tế. Thông tin về tăng trưởng, sức khoẻ và phát triển trong app chỉ để tham khảo — hãy hỏi bác sĩ nhi của bé.",
+      };
+      const STORE_COPY = {
+        en: {
+          get: "Download on the",
+          soon: "Coming soon to",
+          soonAria: "coming soon",
+        },
+        vi: { get: "Tải về trên", soon: "Sắp có trên", soonAria: "sắp ra mắt" },
+      };
+
+      const APPLE =
+        '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.62c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.6 2.25 2.74 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.7.71 2.87.69 1.18-.02 1.93-1.08 2.66-2.14.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.33-3.5zM14.18 6.16c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.08 1.96-.49 2.56-1.21z"/></svg>';
+      const PLAY =
+        '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.6 2.3c-.3.2-.5.6-.5 1.1v17.2c0 .5.2.9.5 1.1l9.3-9.7-9.3-9.7zm10.4 8.6 2.6-2.7-10.9-6.2c-.3-.2-.6-.2-.9-.1l9.2 9zm0 2.2-9.2 9c.3.1.6.1.9-.1l10.9-6.2-2.6-2.7zm5.3-2.9-2.4-1.4-2.8 2.9 2.8 2.9 2.4-1.4c.9-.5.9-1.5 0-2z"/></svg>';
+
+      // The English copy is the markup itself; capture it once so a switch back
+      // to EN restores exactly what shipped.
+      const EN = {};
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        EN[el.dataset.i18n] = el.innerHTML;
+      });
+      document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+        EN[el.dataset.i18nAlt] = el.alt;
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+        EN[el.dataset.i18nAria] = el.getAttribute("aria-label");
+      });
+
+      function badge(href, icon, store, copy) {
+        if (href) {
+          return (
+            '<a class="store" href="' +
+            href +
+            '" rel="noopener">' +
+            icon +
+            "<span><small>" +
+            copy.get +
+            "</small><b>" +
+            store +
+            "</b></span></a>"
+          );
+        }
+        return (
+          '<span class="store soon" aria-label="' +
+          store +
+          " — " +
+          copy.soonAria +
+          '">' +
+          icon +
+          "<span><small>" +
+          copy.soon +
+          "</small><b>" +
+          store +
+          "</b></span></span>"
+        );
+      }
+
+      function apply(lang) {
+        const dict = lang === "vi" ? VI : EN;
+        document.documentElement.lang = lang;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const v = dict[el.dataset.i18n];
+          if (v !== undefined) el.innerHTML = v;
+        });
+        document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+          const v = dict[el.dataset.i18nAlt];
+          if (v !== undefined) el.alt = v;
+        });
+        document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+          const v = dict[el.dataset.i18nAria];
+          if (v !== undefined) el.setAttribute("aria-label", v);
+        });
+        const copy = STORE_COPY[lang];
+        document.querySelectorAll("[data-stores]").forEach((el) => {
+          el.innerHTML =
+            badge(STORES.appStore, APPLE, "App Store", copy) +
+            badge(STORES.googlePlay, PLAY, "Google Play", copy);
+        });
+        document.querySelectorAll("[data-lang]").forEach((a) => {
+          a.setAttribute(
+            "aria-current",
+            a.dataset.lang === lang ? "true" : "false",
+          );
+        });
+      }
+
+      function langFromUrl() {
+        try {
+          return new URLSearchParams(location.search).get("lang") === "vi"
+            ? "vi"
+            : "en";
+        } catch (e) {
+          return "en";
+        }
+      }
+
+      document.querySelectorAll("[data-lang]").forEach((a) => {
+        a.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          const lang = a.dataset.lang;
+          apply(lang);
+          try {
+            const url = new URL(location.href);
+            if (lang === "vi") url.searchParams.set("lang", "vi");
+            else url.searchParams.delete("lang");
+            history.replaceState(null, "", url);
+          } catch (e) {
+            /* a sandboxed host may refuse; the page is already switched */
+          }
+        });
+      });
+
+      apply(langFromUrl());
+    </script>
+  </body>
 </html>
